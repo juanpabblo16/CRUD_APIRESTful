@@ -16,6 +16,26 @@ class UserService {
         }
     }
 
+    
+    public async login(userInput: UserInput) {
+        try {
+            const userExists: UserDocument | null = await this.findByEmail(userInput.email);
+            if(!userExists)
+                 throw  new ReferenceError("User doesnt exists");
+
+            const isMatch: boolean = await bcrypt.compare(userInput.password, userExists.password);
+
+            if (!isMatch){
+                throw new ReferenceError ("User not authorized")
+            }
+            
+            return userExists;            
+        } catch (error) {
+           throw error; 
+        }
+    }
+
+
     public async findByEmail(email: string): Promise<UserDocument | null > {
         try {
             const  user = await  UserModel.findOne({email});
