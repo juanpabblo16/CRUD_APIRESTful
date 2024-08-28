@@ -1,5 +1,6 @@
 import UserModel, {UserDocument, UserInput}  from "../models/user.model";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 class UserService {
 
@@ -28,8 +29,10 @@ class UserService {
             if (!isMatch){
                 throw new ReferenceError ("User not authorized")
             }
-            
-            return userExists;            
+
+            return {email: userExists.email, 
+                id: userExists._id, 
+                token: this.generateToke(userExists)};            
         } catch (error) {
            throw error; 
         }
@@ -80,6 +83,18 @@ class UserService {
            throw error; 
         }
     }    
+
+    public generateToke (user: UserDocument): string {
+        try {
+            return jwt.sign({id: user._id, 
+                email: user.email, 
+                name: user.name},
+                process.env.JWT_SECRET || "secret", {expiresIn: "2m"} );
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 
 export default new UserService();

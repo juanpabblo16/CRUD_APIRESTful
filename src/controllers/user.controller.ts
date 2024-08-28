@@ -17,14 +17,14 @@ class userController {
             res.status(500).json(error);
         }
     }
-
+    
     public async login(req: Request, res: Response) {
         try {
-            const resObj: UserDocument = await userService.login(req.body);
-            res.status(200).json({resObj});            
+            const resObj = await userService.login(req.body);
+            res.status(200).json(resObj);
         } catch (error) {
             if (error instanceof ReferenceError)
-                res.status(401).json({message: "User not authorized" });
+                res.status(401).json({message: "Not authorized" });
             res.status(500).json(error);
         }
     }
