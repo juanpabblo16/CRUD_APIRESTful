@@ -6,17 +6,22 @@ class userController {
 
     public async create(req: Request, res: Response) {
         try {
+            // Validación de si el usuario ya existe
             // const userExists: UserDocument | null = await userService.findByEmail(req.body.email);
-            // if(userExists)
-            //      res.status(400).json({message: "User already exists" });
+            // if(userExists) {
+            //      return res.status(400).json({ message: "User already exists" });
+            // }
+    
             const user: UserDocument = await userService.create(req.body as UserInput);
-            res.status(201).json(user);            
+            return res.status(201).json(user);  // Asegúrate de usar return            
         } catch (error) {
-            if (error instanceof ReferenceError)
-                res.status(400).json({message: "User already exists" });
-            res.status(500).json(error);
+            if (error instanceof ReferenceError) {
+                return res.status(400).json({ message: "User already exists" });  // Añadimos return aquí
+            }
+            return res.status(500).json({ message: "Internal server error", error }); // Añadimos return aquí
         }
     }
+    
 
     public async login(req: Request, res: Response) {
         try {
