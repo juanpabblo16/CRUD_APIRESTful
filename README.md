@@ -1,5 +1,12 @@
 # CRUD Node.js con TypeScript y MongoDB
 
+## Por:
+- Juan Pablo Acevedo
+- Jesus Garces
+- Ariel Pabon
+
+--
+
 Este proyecto es una implementación de un CRUD utilizando Node.js, TypeScript, y MongoDB. El desarrollo se llevó a cabo cumpliendo los requerimientos del taller "2024B-CI3-TallerNode", abarcando la gestión de usuarios con roles y permisos específicos. Próximamente se integrará la gestión de comentarios y reacciones a estos mismos.
 
 ## 📋 Requisitos del Taller
@@ -125,12 +132,4 @@ Este proyecto está bajo la licencia MIT.
 
 ¡Esperamos que encuentres útil este CRUD y su implementación! Si tienes alguna duda o sugerencia, no dudes en abrir un issue en el repositorio.
 
-```
-
-### **Puntos a Destacar:**
-- **Estructura Clara:** El `README` guía al usuario en cada paso, desde la instalación hasta la ejecución del proyecto.
-- **Requisitos del Taller:** Se muestra cómo el proyecto cumple con los puntos solicitados y sugiere la implementación de las funciones faltantes.
-- **Estilo Atractivo:** Usa encabezados, listas, y código formateado para una mejor comprensión y presentación.
-
-Si necesitas que haga ajustes o desees que expanda alguna sección, ¡házmelo saber!
 ```
