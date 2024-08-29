@@ -22,33 +22,17 @@ class userController {
         }
     }
     
-
     public async login(req: Request, res: Response) {
         try {
-            // Validar que el body contiene los campos necesarios
-            const { email, password } = req.body;
-    
-            if (!email || !password) {
-                return res.status(400).json({ message: "Email and password are required" });
-            }
-    
-            // Intentar el login a través del servicio
-            const resObj = await userService.login({ email, password });
+            const resObj = await userService.login(req.body);
             res.status(200).json(resObj);
         } catch (error) {
-            // Manejo del error de tipo unknown
-            if (error instanceof ReferenceError) {
-                res.status(401).json({ message: "Not authorized" });
-            } else if (error instanceof Error) {
-                // General error handling
-                res.status(500).json({ error: error.message });
-            } else {
-                // Fallback en caso de un tipo de error inesperado
-                res.status(500).json({ message: "An unknown error occurred." });
-            }
+            if (error instanceof ReferenceError)
+                res.status(401).json({message: "Not authorized" });
+            res.status(500).json(error);
         }
     }
-    
+
     
 
     public async get (req: Request, res: Response) {

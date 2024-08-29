@@ -7,17 +7,14 @@ import auth from "../middlewares/auth";
 
 export const router = express.Router();
 
-router.post("/", validateSchema(userSchema), userController.create );
+router.post("/", validateSchema(userSchema), userController.create);
 router.post("/login", validateSchema(loginSchema), userController.login);
 
-router.get("/", userController.getAll);
+router.get("/", auth, userController.getAll); // Ruta protegida
+router.get("/profile", auth, userController.get); // Ruta protegida
 
-router.get("/profile", auth, userController.get);
-
-router.get("/:id", userController.get);
-
-router.put("/:id", userController.update);
-
-router.delete("/:id", userController.delete);
+router.get("/:id", auth, userController.get); // Ruta protegida
+router.put("/:id", auth, userController.update); // Ruta protegida
+router.delete("/:id", auth, userController.delete); // Ruta protegida
 
 export default router;
