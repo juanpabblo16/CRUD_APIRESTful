@@ -67,18 +67,23 @@ class userController {
             res.status(500).json(error);
         }
     }
-
-    public async delete (req: Request, res: Response) {
+    public async delete(req: Request, res: Response) {
         try {
-            const user: UserDocument | null = await userService.delete(req.params.id);
-            if (!user){
-                res.status(404).json({message: `User with id:${req.params.id} not found`})
-            }            
-            res.json(user);          
+            const userId = req.params.id;
+            const user: UserDocument | null = await userService.delete(userId);
+    
+            if (!user) {
+                return res.status(404).json({ message: `User with id:${userId} not found` });
+            }
+    
+            res.json({ message: `User with id:${userId} successfully deleted` });
         } catch (error) {
-            res.status(500).json(error);
-        }    
+            res.status(500).json({ message: "Internal Server Error", error });
+        }
     }
+    
+    
+    
 }
 
 export default new userController();

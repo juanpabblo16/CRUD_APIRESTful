@@ -5,14 +5,15 @@ import jwt from "jsonwebtoken";
 class UserService {
 
        // Función para generar el token JWT
-       public generateToken(user: UserDocument): string {
+    public generateToken(user: UserDocument): string {
         const payload = {
             id: user._id,
             email: user.email,
+            role: user.role // Incluye el rol en el payload
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET || "secret", {
-            expiresIn: "1h", // El token expira en 1 hora
+            expiresIn: "1h",
         });
 
         return token;
@@ -21,7 +22,7 @@ class UserService {
     public async create(userInput: UserInput): Promise<UserDocument> {
         try {
             const userExists: UserDocument | null = await this.findByEmail(userInput.email);
-            if(userExists)
+            if (userExists)
                 throw new ReferenceError("User already exists");
 
             userInput.password = await bcrypt.hash(userInput.password, 10);
@@ -45,7 +46,6 @@ class UserService {
                 throw new ReferenceError("Not authorized");
             }
 
-            // Generar token JWT
             const token = this.generateToken(user);
 
             return { token };
@@ -53,6 +53,15 @@ class UserService {
             throw error;
         }
     }
+
+    public async getAll(): Promise<UserDocument[]> {
+        try {
+            return await UserModel.find();
+        } catch (error) {
+            throw error;
+        }
+    }
+
 
     public async findByEmail(email: string): Promise<UserDocument | null > {
         try {
@@ -72,32 +81,33 @@ class UserService {
         }
     }    
 
-    public async findById(id: string): Promise<UserDocument | null > {
+    public async findById(id: string): Promise<UserDocument | null> {
         try {
-            const  user = await  UserModel.findById(id);
-            return user;
+            return await UserModel.findById(id);
         } catch (error) {
-           throw error; 
+            throw error;
         }
     }
 
     public async update(id: string, userInput: UserInput): Promise<UserDocument | null> {
         try {
-            const  user: UserDocument | null = await  UserModel.findOneAndUpdate({_id: id}, userInput, {returnOriginal: false});
-            return user;            
+            const user: UserDocument | null = await UserModel.findOneAndUpdate({ _id: id }, userInput, { new: true });
+            return user;
         } catch (error) {
-           throw error; 
+            throw error;
         }
     }
 
     public async delete(id: string): Promise<UserDocument | null> {
         try {
-            const  user: UserDocument | null = await  UserModel.findByIdAndDelete(id);
-            return user;            
+            const user: UserDocument | null = await UserModel.findByIdAndDelete(id);
+            return user;
         } catch (error) {
-           throw error; 
+            throw error;
         }
-    }    
+    }
+    
+    
 }
 
 export default new UserService();
