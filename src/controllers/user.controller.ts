@@ -17,7 +17,7 @@ class userController {
             res.status(500).json(error);
         }
     }
-    
+
     public async login(req: Request, res: Response) {
         try {
             const resObj = await userService.login(req.body);
