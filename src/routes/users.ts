@@ -8,7 +8,7 @@ import auth from "../middlewares/auth";
 export const router = express.Router();
 
 router.post("/", validateSchema(userSchema), userController.create );
-router.post("/login", validateSchema(loginSchema), userController.login );
+router.post("/login", validateSchema(loginSchema), userController.login);
 
 router.get("/", userController.getAll);
 
@@ -19,3 +19,5 @@ router.get("/:id", userController.get);
 router.put("/:id", userController.update);
 
 router.delete("/:id", userController.delete);
+
+export default router;

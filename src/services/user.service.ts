@@ -18,22 +18,28 @@ class UserService {
         }
     }
 
-    public async login(userInput: UserInput) {
+    public async login(userInput: { email: string; password: string }) {
         try {
-            const userExists: UserDocument | null = await this.findByEmail(userInput.email);
-            if(!userExists)
-                 throw  new ReferenceError("User not exists");
-
-            const isMatch: boolean = await bcrypt.compare(userInput.password, userExists.password);
-            
-            if(!isMatch)
-                throw  new ReferenceError("Not authorized");
-            
+            const { email, password } = userInput;
+    
+            // Verificar si el usuario existe por email
+            const userExists = await this.findByEmail(email);
+            if (!userExists) {
+                throw new ReferenceError("User not exists");
+            }
+    
+            // Comparar la contraseña proporcionada con la almacenada
+            const isMatch = await bcrypt.compare(password, userExists.password);
+            if (!isMatch) {
+                throw new ReferenceError("Not authorized");
+            }
+    
             return userExists;
         } catch (error) {
-           throw error; 
+            throw error;
         }
     }
+    
 
 
     public async findByEmail(email: string): Promise<UserDocument | null > {
