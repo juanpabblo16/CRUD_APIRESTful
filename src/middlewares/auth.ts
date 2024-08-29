@@ -1,24 +1,29 @@
 import { Request, Response, NextFunction } from "express";
-import jwt, { TokenExpiredError } from "jsonwebtoken";
+import jwt, { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
 
 const auth = (req: Request, res: Response, next: NextFunction) => {
     let token = req.header("Authorization");
-    token = token?.replace("Bearer ", "");
+    token = token?.replace("Bearer ", ""); // Remover "Bearer " del token
 
+    // Verificar si el token está presente
     if (!token) {
-        return res.status(401).json({ msg: "No token, authorization denied" });
+        return res.status(401).json({ message: "Acceso denegado: No se proporcionó un token de autorización." });
     }
 
     try {
+        // Verificar y decodificar el token
         const decoded: any = jwt.verify(token, process.env.JWT_SECRET || "secret");
-        req.body.loggedUser = decoded; // Adding user info to request body for later use
+        req.body.loggedUser = decoded; // Añadir info del usuario al request body para usarlo después
         next();
     } catch (error) {
         if (error instanceof TokenExpiredError) {
-            return res.status(401).json({ msg: "Token expired, authorization denied" });
+            return res.status(401).json({ message: "Token expirado: Por favor inicia sesión nuevamente." });
+        } else if (error instanceof JsonWebTokenError) {
+            return res.status(401).json({ message: "Token inválido: La autorización ha sido denegada." });
+        } else {
+            return res.status(500).json({ message: "Error en la autenticación: Ha ocurrido un problema inesperado." });
         }
-        res.status(401).json({ msg: "Invalid token, authorization denied" });
     }
-}
+};
 
 export default auth;

@@ -1,15 +1,14 @@
-import UserModel, {UserDocument, UserInput}  from "../models/user.model";
+import UserModel, { UserDocument, UserInput } from "../models/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class UserService {
-
-       // Función para generar el token JWT
+    // Función para generar el token JWT
     public generateToken(user: UserDocument): string {
         const payload = {
             id: user._id,
             email: user.email,
-            role: user.role // Incluye el rol en el payload
+            role: user.role
         };
 
         const token = jwt.sign(payload, process.env.JWT_SECRET || "secret", {
@@ -22,8 +21,7 @@ class UserService {
     public async create(userInput: UserInput): Promise<UserDocument> {
         try {
             const userExists: UserDocument | null = await this.findByEmail(userInput.email);
-            if (userExists)
-                throw new ReferenceError("User already exists");
+            if (userExists) throw new ReferenceError("User already exists");
 
             userInput.password = await bcrypt.hash(userInput.password, 10);
 
@@ -54,32 +52,23 @@ class UserService {
         }
     }
 
-    public async getAll(): Promise<UserDocument[]> {
+    public async findAll(): Promise<UserDocument[]> {
         try {
-            return await UserModel.find();
+            const users = await UserModel.find();
+            return users;
         } catch (error) {
             throw error;
         }
     }
 
-
-    public async findByEmail(email: string): Promise<UserDocument | null > {
+    public async findByEmail(email: string): Promise<UserDocument | null> {
         try {
-            const  user = await  UserModel.findOne({email});
+            const user = await UserModel.findOne({ email });
             return user;
         } catch (error) {
-           throw error; 
+            throw error;
         }
     }
-
-    public async findAll(): Promise<UserDocument[] > {
-        try {
-            const  users = await  UserModel.find();
-            return users;
-        } catch (error) {
-           throw error; 
-        }
-    }    
 
     public async findById(id: string): Promise<UserDocument | null> {
         try {
@@ -106,8 +95,6 @@ class UserService {
             throw error;
         }
     }
-    
-    
 }
 
 export default new UserService();
