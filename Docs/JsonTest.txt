@@ -1,0 +1,16 @@
+Crear un usuario
+
+{
+  "name": "Jesus Garces",
+  "email": "jesus@gmail.com",
+  "password": "passwordxd",
+  "role": "superadmin"
+}
+
+Login
+
+{
+  "email": "jesus@gmail.com",
+  "password": "passwordxd"
+}
+

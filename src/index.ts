@@ -1,6 +1,8 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 
+import { router as commentRouter } from './routes/comments';
+import { router as reactionRouter } from './routes/reactions';
 import { router } from './routes/posts';
 import { router as user } from './routes/users';
 import { db } from './config/db';
@@ -18,6 +20,8 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello World');
 });
 
+app.use('/api/comments', commentRouter);
+app.use('/api/reactions', reactionRouter);
 app.use('/api/posts', router);
 app.use('/api/users', user);
 
