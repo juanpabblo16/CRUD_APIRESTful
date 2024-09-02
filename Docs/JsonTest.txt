@@ -58,7 +58,7 @@ Eliminar un comentario primero has un get para obtener su id http://localhost:30
 
 REACCIONES "like", "love", "disagree"
 
-Get reaccion http://localhost:3000/api/reactions/id
+Get reaccion http://localhost:3000/api/reactions/{id}
 
 {
   "id": "66d52f569d0faa1a89a14b07"
