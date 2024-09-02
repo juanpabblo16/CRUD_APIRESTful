@@ -67,11 +67,27 @@ El servidor se iniciará en `http://localhost:3000`.
 
 Para probar las funcionalidades del CRUD, puedes usar herramientas como Postman o cURL. Algunas rutas principales incluyen:
 
+## Usuarios
+
 *   **POST /api/users**: Crear un nuevo usuario.
 *   **POST /api/users/login**: Iniciar sesión y obtener un token JWT.
 *   **GET /api/users/:id**: Obtener los datos de un usuario específico.
 *   **PUT /api/users/:id**: Actualizar los datos de un usuario.
 *   **DELETE /api/users/:id**: Eliminar un usuario (solo accesible para `superadmin`).
+
+## Gestión de Comentarios
+
+*   **POST /api/comments:** Crear un comentario.
+*   **GET /api/comments:** Listar todos los comentarios.
+*   **GET /api/comments/id:** Obtener un comentario específico.
+*   **PUT /api/comments/id:** Actualizar un comentari(solo por el autor).
+*   **DELETE /api/comments/id:** Eliminar un comentario (solo por el autor o superadmin).
+
+## Gestión de Reacciones
+
+* **POST /api/reactions:** Crear una reacción a un comentario.
+* **DELETE /api/reactions/:** Eliminar una reacción (solo por el autor).
+* **GET /api/reactions:** Ver todas las reacciones de un comentario.
 
 🛡️ Gestión de Roles y Permisos
 -------------------------------
@@ -83,35 +99,7 @@ La aplicación cuenta con una verificación robusta de roles que permite a los u
 *   **Eliminación de Usuarios**: Solo `superadmin` puede eliminar usuarios.
 *   **Actualización de Usuarios**: Solo `superadmin` puede actualizar datos críticos de otros usuarios.
 
-📌 Implementación Futura: Gestión de Comentarios y Reacciones
--------------------------------------------------------------
 
-### Funcionalidad de Comentarios:
-
-1.  **Crear Comentario**: Un usuario puede crear un comentario relacionado con un post o un recurso específico.
-2.  **Editar Comentario**: Solo el autor del comentario puede editarlo.
-3.  **Eliminar Comentario**: Los comentarios pueden ser eliminados por el autor o por un `superadmin`.
-
-### Funcionalidad de Reacciones:
-
-1.  **Agregar Reacción**: Los usuarios pueden reaccionar a un comentario (e.g., like, dislike).
-2.  **Eliminar Reacción**: Los usuarios pueden eliminar sus reacciones previas.
-3.  **Ver Reacciones**: Mostrar el conteo y tipo de reacciones en cada comentario.
-
-### Pasos para Implementar Comentarios y Reacciones:
-
-1.  **Crear Modelos de Comentarios y Reacciones**:
-    
-    *   Definir esquemas en Mongoose para manejar comentarios y reacciones.
-    *   Relacionar los comentarios con usuarios y posts.
-2.  **Desarrollar Controladores y Servicios**:
-    
-    *   Implementar los métodos CRUD para comentarios y reacciones.
-    *   Añadir lógica de verificación de permisos en los controladores.
-3.  **Añadir Rutas**:
-    
-    *   Definir rutas protegidas para la gestión de comentarios y reacciones.
-    *   Integrar middleware para la autenticación y autorización.
 
 🛠️ Tecnologías Utilizadas
 --------------------------
@@ -132,4 +120,82 @@ Este proyecto está bajo la licencia MIT.
 
 ¡Esperamos que encuentres útil este CRUD y su implementación! Si tienes alguna duda o sugerencia, no dudes en abrir un issue en el repositorio.
 
+Como hacer pruebas con postman [Archivo](/Docs/JsonTest.txt)
+```
+Login
+
+{
+  "email": "jesus@gmail.com",
+  "password": "passwordxd"
+}
+
+RECUERDA PONER EL TOKEN EN EL CAMPO DE AUTORIZACION
+
+USUARIOS
+
+http://localhost:3000/api/users
+Crear un usuario
+
+{
+  "name": "Jesus Garces",
+  "email": "jesus@gmail.com",
+  "password": "passwordxd",
+  "role": "superadmin"
+}
+
+Actualizar info de un usuario, primero has un get para obtener su id http://localhost:3000/api/users/id del usuario
+
+{
+  "name": "Jesus Garces",
+  "email": "jesus02garces@gmail.com",
+  "password": "passwordxd",
+  "role": "superadmin"
+}
+
+Eliminar un usuario primero has un get para obtener su id http://localhost:3000/api/users/id del usuario
+
+COMENTARIOS
+
+Crear un comentario 
+
+{
+  "content": "Este es una respuesta a un comentario"
+}
+
+Responder un comentario(Si tu comentario es una respuesta de otro, debes poner el id en el atributo 'parent')
+
+{
+  "content": "Este es una respuesta a un comentario",
+  "parent": "xxxxxxxxxxxxxxxxxxx" // Solo ponlo si es una respuesta, reemplazar el id.
+}
+
+Actualizar un comentario, primero has un get para obtener su id
+
+http://localhost:3000/api/comments/id del comendario
+
+{
+  "id": "id del comentario",
+  "content": "cambiar comentario"
+}
+
+Eliminar un comentario primero has un get para obtener su id http://localhost:3000/api/comments/id del comendario
+
+REACCIONES "like", "love", "disagree"
+
+Get reaccion http://localhost:3000/api/reactions/id
+
+{
+  "id": "66d52f569d0faa1a89a14b07"
+}
+
+Crear una reaccion 
+
+{
+  "type": "like",
+  "comment": "comment_id"
+}
+
+Eliminar una reaccion, solo la puedes eliminar si estas logeado con el usuario que la creo
+
+http://localhost:3000/api/reactions/id
 ```
