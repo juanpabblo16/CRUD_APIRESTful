@@ -348,7 +348,7 @@ color-support@^1.1.2:
   version "1.0.0"
   dependencies:
     bcrypt "^5.1.1"
-    compunet "file:C:/Users/juanp/AppData/Local/Yarn/Cache/v6/npm-compunet-1.0.0-ed2b193f-1b27-420a-b9c2-7e037871aad2-1725905306417/node_modules/compunet"
+    compunet "file:C:/Users/juanp/AppData/Local/Yarn/Cache/v6/npm-compunet-1.0.0-cbee5410-c276-49ec-a430-fcbdc9aaad59-1725906596515/node_modules/compunet"
     dotenv "^16.4.5"
     express "^4.19.2"
     jsonwebtoken "^9.0.2"
