@@ -1,19 +1,22 @@
-# Utiliza una imagen base oficial de Node.js
+# Usa una imagen base oficial de Node.js
 FROM node:18
 
 # Establece el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copia el archivo package.json y yarn.lock al contenedor
+# Copia los archivos de configuración y de dependencias
 COPY package.json yarn.lock ./
 
 # Instala las dependencias usando Yarn
 RUN yarn install --frozen-lockfile
 
-# Copia el resto del código de la aplicación
+# Copia todo el código de la aplicación
 COPY . .
 
-# Expone el puerto en el que la aplicación escucha (usualmente 3000)
+# Compila el proyecto TypeScript a JavaScript
+RUN yarn build
+
+# Expone el puerto en el que la aplicación escucha
 EXPOSE 3000
 
 # Define el comando para iniciar la aplicación
