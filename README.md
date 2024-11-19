@@ -44,10 +44,10 @@ Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
 ```env
 PORT=3000
-MONGO_URI=your_mongodb_uri
+MONGODB_URL=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 ```
-
+```
 *   `PORT`: El puerto en el que correrá la aplicación.
 *   `MONGO_URI`: URI de conexión a tu base de datos MongoDB.
 *   `JWT_SECRET`: Clave secreta para la generación de JWT.
@@ -61,7 +61,7 @@ npm run dev
 ```
 
 El servidor se iniciará en `http://localhost:3000`.
-
+GraphQL se iniciara en `http://localhost:3000/graphql`
 🧪 Pruebas de Funcionalidad
 ---------------------------
 
@@ -120,82 +120,4 @@ Este proyecto está bajo la licencia MIT.
 
 ¡Esperamos que encuentres útil este CRUD y su implementación! Si tienes alguna duda o sugerencia, no dudes en abrir un issue en el repositorio.
 
-Como hacer pruebas con postman [Archivo](/Docs/JsonTest.txt)
-```
-Login
-
-{
-  "email": "jesus@gmail.com",
-  "password": "passwordxd"
-}
-
-RECUERDA PONER EL TOKEN EN EL CAMPO DE AUTORIZACION
-
-USUARIOS
-
-http://localhost:3000/api/users
-Crear un usuario
-
-{
-  "name": "Jesus Garces",
-  "email": "jesus@gmail.com",
-  "password": "passwordxd",
-  "role": "superadmin"
-}
-
-Actualizar info de un usuario, primero has un get para obtener su id http://localhost:3000/api/users/id del usuario
-
-{
-  "name": "Jesus Garces",
-  "email": "jesus02garces@gmail.com",
-  "password": "passwordxd",
-  "role": "superadmin"
-}
-
-Eliminar un usuario primero has un get para obtener su id http://localhost:3000/api/users/id del usuario
-
-COMENTARIOS
-
-Crear un comentario 
-
-{
-  "content": "Este es una respuesta a un comentario"
-}
-
-Responder un comentario(Si tu comentario es una respuesta de otro, debes poner el id en el atributo 'parent')
-
-{
-  "content": "Este es una respuesta a un comentario",
-  "parent": "xxxxxxxxxxxxxxxxxxx" // Solo ponlo si es una respuesta, reemplazar el id.
-}
-
-Actualizar un comentario, primero has un get para obtener su id
-
-http://localhost:3000/api/comments/id del comendario
-
-{
-  "id": "id del comentario",
-  "content": "cambiar comentario"
-}
-
-Eliminar un comentario primero has un get para obtener su id http://localhost:3000/api/comments/id del comendario
-
-REACCIONES "like", "love", "disagree"
-
-Get reaccion http://localhost:3000/api/reactions/id
-
-{
-  "id": "66d52f569d0faa1a89a14b07"
-}
-
-Crear una reaccion 
-
-{
-  "type": "like",
-  "comment": "comment_id"
-}
-
-Eliminar una reaccion, solo la puedes eliminar si estas logeado con el usuario que la creo
-
-http://localhost:3000/api/reactions/id
-```
+Como hacer pruebas con postman o thunder client [Archivo](/Docs/thunder-collection_postman_comments_manager.json)

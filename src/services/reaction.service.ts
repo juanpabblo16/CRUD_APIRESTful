@@ -57,6 +57,15 @@ class ReactionService {
             throw error;
         }
     }
+
+    public async getAll(): Promise<ReactionDocument[]>{
+        try{
+            const reactions = await Reaction.find();
+            return reactions;
+        }catch (error){
+            throw error;
+        }
+    }
 }
 
 export default new ReactionService();
