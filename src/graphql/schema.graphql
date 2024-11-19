@@ -1,0 +1,82 @@
+type Query {
+  # Users
+  users: [User!]!
+  user(id: ID!): User
+
+  # Comments
+  comments: [Comment!]!
+  comment(id: ID!): Comment
+
+  # Reactions
+  reactions: [Reaction!]!
+  reaction(id: ID!): Reaction
+}
+
+type Mutation {
+  # Users
+  login(email: String!, password: String!): AuthPayload
+  createUser(input: CreateUserInput!): User
+  updateUser(id: ID!, input: UpdateUserInput!): User
+  deleteUser(id: ID!): Boolean
+
+  # Comments
+  createComment(input: CreateCommentInput!): Comment
+  updateComment(id: ID!, content: String!): Comment
+  deleteComment(id: ID!): Boolean
+
+  # Reactions
+  createReaction(input: CreateReactionInput!): Reaction
+  deleteReaction(id: ID!): Boolean
+}
+
+# Types
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  role: String!
+}
+
+type Comment {
+  id: ID!
+  content: String!
+  parent: Comment
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Reaction {
+  id: ID!
+  type: String!
+  comment: Comment!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+# Input Types
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  role: String!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  password: String
+  role: String
+}
+
+input CreateCommentInput {
+  content: String!
+  parent: ID
+}
+
+input CreateReactionInput {
+  type: String!
+  comment: ID!
+}
