@@ -1,5 +1,9 @@
 import { UserDocument, UserInput } from "../models/user.model";
+import { CommentDocument, CommentInput } from "../models/comment.model";
+import { ReactionDocument, ReactionInput } from "../models/reaction.model";
 import userService from "../services/user.service";
+import commentService from "../services/comment.service";
+import reactionService from "../services/reaction.service";
 
 export const resolvers = {
     Query: {
@@ -16,7 +20,28 @@ export const resolvers = {
         users: async () => {
             const users: UserDocument[] = await userService.findAll();
             return users;
+        },
+
+        // Obtener todos los comentarios
+        comments: async () => {
+            const comments: CommentDocument[] = await commentService.findAll();
+            return comments;
+        },
+
+        // Obtener una reacción por ID
+        reaction: async (_root: any, params: { id: string }) => {
+            const reaction: ReactionDocument | null = await reactionService.findById(params.id);
+            if (!reaction) {
+                throw new Error('Reaction not found');
+            }
+            return reaction;
+        },
+
+        reactions: async () => {
+            const reactions: ReactionDocument[] = await reactionService.getAll();
+            return reactions;
         }
+
     },
 
     Mutation: {
@@ -41,7 +66,31 @@ export const resolvers = {
             if (!deletedUser) {
                 throw new Error('User not found or could not be deleted');
             }
-            return `User with id: ${params.id} deleted successfully`;
+            return true;
+        },
+
+        // Crear un nuevo comentario
+        createComment: async (_root: any, params: { input: CommentInput }) => {
+            const commentOutput: CommentDocument = await commentService.create(params.input);
+            return commentOutput;
+        },
+
+        // Eliminar un comentario
+        deleteComment: async (_root: any, params: { id: string }) => {
+            const deletedComment: CommentDocument | null = await commentService.delete(params.id);
+            if (!deletedComment) {
+                throw new Error('Comment not found or could not be deleted');
+            }
+            return true;
+        },
+
+        // Eliminar una reacción
+        deleteReaction: async (_root: any, params: { id: string }) => {
+            const deletedReaction: ReactionDocument | null = await reactionService.delete(params.id);
+            if (!deletedReaction) {
+                throw new Error('Reaction not found or could not be deleted');
+            }
+            return true;
         }
     }
 };
