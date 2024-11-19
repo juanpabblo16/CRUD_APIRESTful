@@ -1,0 +1,93 @@
+query {
+  user(id: "USER_ID") {
+    id
+    name
+    email
+  }
+}
+
+query {
+  users {
+    id
+    name
+    email
+  }
+}
+
+query {
+  comments {
+    id
+    content
+  }
+}
+
+query {
+  reaction(id: "REACTION_ID") {
+    id
+    type
+    commentId
+    userId
+  }
+}
+
+query {
+  reactions {
+    id
+    type
+    commentId
+    userId
+  }
+}
+
+query {
+    reactionsByComment(commentId: "COMMENT_ID") {
+        id
+        type
+    }
+}
+
+query {
+    reactionsByUser(userId: "USER_ID") {
+        id
+        type
+        comment {
+            content
+        }
+    }
+}
+
+mutation {
+  createUser(input: { name: "John Doe", email: "john@example.com", password: "password123" , role: "regular"}) {
+    id
+    name
+    email
+  }
+}
+
+mutation {
+  updateUser(id: "USER_ID", input: { name: "Jane Doe", email: "jane@example.com", password: "newpassword" }) {
+    id
+    name
+    email
+  }
+}
+
+mutation {
+  deleteUser(id: "USER_ID")
+}
+
+mutation {
+  createComment(input: { content: "This is a comment"}) {
+    id
+    content
+  }
+}
+
+mutation {
+  deleteComment(id: "COMMENT_ID")
+}
+
+mutation {
+  deleteReaction(id: "REACTION_ID")
+}
+

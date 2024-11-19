@@ -10,6 +10,8 @@ type Query {
   # Reactions
   reactions: [Reaction!]!
   reaction(id: ID!): Reaction
+  reactionsByComment(commentId: ID!): [Reaction!]!
+  reactionsByUser(userId: ID!): [Reaction!]!
 }
 
 type Mutation {
@@ -43,12 +45,14 @@ type Comment {
   parent: Comment
   createdAt: String!
   updatedAt: String!
+  user: User
 }
 
 type Reaction {
   id: ID!
   type: String!
   comment: Comment!
+  user: User
 }
 
 type AuthPayload {
@@ -73,10 +77,12 @@ input UpdateUserInput {
 
 input CreateCommentInput {
   content: String!
+  user: ID!
   parent: ID
 }
 
 input CreateReactionInput {
   type: String!
   comment: ID!
+  user: ID!
 }
