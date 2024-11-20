@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';  // Importa BrowserRouter
 import App from './App';  // Tu archivo App.js
-import './index.css';  // Tus estilos si los tienes
+import './styles/index.css';  // Tus estilos si los tienes
 
 // Envuelve el componente App con BrowserRouter
 ReactDOM.render(
