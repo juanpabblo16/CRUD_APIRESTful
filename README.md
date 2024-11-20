@@ -7,7 +7,7 @@
 
 ---
 
-Este proyecto es una implementación de un CRUD utilizando Node.js, TypeScript, y MongoDB. El desarrollo se llevó a cabo cumpliendo los requerimientos del taller "2024B-CI3-TallerNode", abarcando la gestión de usuarios con roles y permisos específicos. Próximamente se integrará la gestión de comentarios y reacciones a estos mismos.
+Este proyecto es una implementación de un CRUD utilizando Node.js, TypeScript, GraphQL, React y MongoDB. El desarrollo se llevó a cabo cumpliendo los requerimientos del taller "2024B-CI3-TallerNode", abarcando la gestión de usuarios con roles y permisos específicos. Próximamente se integrará la gestión de comentarios y reacciones a estos mismos.
 
 ## 📋 Requisitos del Taller
 
@@ -28,7 +28,7 @@ Para cumplir con los requerimientos del taller, hemos desarrollado las siguiente
 git clone https://github.com/tu-usuario/nombre-repositorio.git
 cd nombre-repositorio
 
-````
+```
 
 ### 2\. **Instalar Dependencias**
 
@@ -47,9 +47,8 @@ PORT=3000
 MONGODB_URL=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 ```
-```
 *   `PORT`: El puerto en el que correrá la aplicación.
-*   `MONGO_URI`: URI de conexión a tu base de datos MongoDB.
+*   `MONGODB_URL`: URI de conexión a tu base de datos MongoDB.
 *   `JWT_SECRET`: Clave secreta para la generación de JWT.
 
 ### 4\. **Iniciar el Servidor**
@@ -61,11 +60,21 @@ npm run dev
 ```
 
 El servidor se iniciará en `http://localhost:3000`.
-GraphQL se iniciara en `http://localhost:3000/graphql`
+
+<p>
+
+GraphQL se iniciara en `http://localhost:3000/graphql`.
+
+Te mostrara la pantalla de inicio de Apollo Server
+
+![](/imgs//apolloServer.png)
+
 🧪 Pruebas de Funcionalidad
 ---------------------------
 
 Para probar las funcionalidades del CRUD, puedes usar herramientas como Postman o cURL. Algunas rutas principales incluyen:
+
+En la carpeta Docs hay un [Archivo](/Docs/thunder-collection_postman_comments_manager.json) que contiene la colleccion lista para inportar y probar los endpoints.
 
 ## Usuarios
 
@@ -89,6 +98,10 @@ Para probar las funcionalidades del CRUD, puedes usar herramientas como Postman 
 * **DELETE /api/reactions/:** Eliminar una reacción (solo por el autor).
 * **GET /api/reactions:** Ver todas las reacciones de un comentario.
 
+## GraphQL
+
+Puedes ingresar querys y mutaciones en la consola, en el archivo [help](/Docs/help.graphql) encontraras algunas querys y mutaciones que puedes probar.
+
 🛡️ Gestión de Roles y Permisos
 -------------------------------
 
@@ -105,6 +118,8 @@ La aplicación cuenta con una verificación robusta de roles que permite a los u
 --------------------------
 
 *   **Node.js**: Entorno de ejecución de JavaScript.
+* **GraphQL**: Lenguaje para consultas
+* **React**: Usado para construir un Cliente para GraphQL
 *   **TypeScript**: Superset de JavaScript que añade tipos estáticos.
 *   **Express**: Framework para aplicaciones web en Node.js.
 *   **MongoDB**: Base de datos NoSQL para almacenar usuarios, comentarios y reacciones.
@@ -119,5 +134,3 @@ Este proyecto está bajo la licencia MIT.
 * * *
 
 ¡Esperamos que encuentres útil este CRUD y su implementación! Si tienes alguna duda o sugerencia, no dudes en abrir un issue en el repositorio.
-
-Como hacer pruebas con postman o thunder client [Archivo](/Docs/thunder-collection_postman_comments_manager.json)

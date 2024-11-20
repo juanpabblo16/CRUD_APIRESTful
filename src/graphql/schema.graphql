@@ -60,11 +60,6 @@ type AuthPayload {
   user: User!
 }
 
-type LoginInput = {
-  email: string!
-  password: string!
-}
-
 # Input Types
 input CreateUserInput {
   name: String!
