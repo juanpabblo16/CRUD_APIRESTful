@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { Route, Routes } from 'react-router-dom';
 import { useNavigate } from 'react-router';
-import { apolloClient } from './graphql/queries';  // Asegúrate de que 'apolloClient' esté correctamente configurado en ./lib/graphql/queries
-import NavBar from './components/NavBar';  // Importa correctamente tu componente NavBar
-import HomePage from './pages/HomePage';  // Asegúrate de tener este componente en la carpeta 'pages'
-import LoginPage from './pages/LoginPage';  // Asegúrate de tener este componente en la carpeta 'pages'
-import RegisterPage from './pages/RegisterPage';  // Asegúrate de tener este componente en la carpeta 'pages'
-import ProfilePage from './pages/ProfilePage';  // Asegúrate de tener este componente en la carpeta 'pages'
-import getUser from './services/authService';  // Importa el valor por defecto
+import { apolloClient } from './graphql/queries';
+import NavBar from './components/NavBar';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
+import getUser from './services/authService';
 
 function App() {
     const navigate = useNavigate();
