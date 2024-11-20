@@ -1,9 +1,8 @@
-import UserModel, { UserDocument, UserInput } from "../models/user.model";
+import UserModel, { UserDocument, UserInput, LoginInput } from "../models/user.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class UserService {
-    // Función para generar el token JWT
     public generateToken(user: UserDocument): string {
         const payload = {
             id: user._id,
@@ -32,14 +31,14 @@ class UserService {
         }
     }
 
-    public async login(userInput: UserInput): Promise<{ token: string }> {
+    public async login(loginInput: LoginInput): Promise<{ token: string }> {
         try {
-            const user: UserDocument | null = await this.findByEmail(userInput.email);
+            const user: UserDocument | null = await this.findByEmail(loginInput.email);
             if (!user) {
                 throw new ReferenceError("User not exists");
             }
 
-            const isMatch: boolean = await bcrypt.compare(userInput.password, user.password);
+            const isMatch: boolean = await bcrypt.compare(loginInput.password, user.password);
             if (!isMatch) {
                 throw new ReferenceError("Not authorized");
             }
