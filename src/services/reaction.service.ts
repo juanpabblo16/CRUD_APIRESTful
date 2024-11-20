@@ -1,14 +1,30 @@
-import Reaction, { ReactionDocument } from "../models/reaction.model";
-import { CreateReactionInput } from "../schemas/reaction.schema";
+import Reaction, { ReactionDocument, ReactionInput } from "../models/reaction.model";
+import Comment from "../models/comment.model";
+import User from "../models/user.model";
 
 class ReactionService {
-    // Método para crear una nueva reacción
-    public async create(data: CreateReactionInput & { user: string }): Promise<ReactionDocument> {
+    public async create(data: ReactionInput): Promise<ReactionDocument> {
         try {
-            const reaction = await Reaction.create(data);
+            const { user, comment, type } = data;
+
+            const userExists = await User.findById(user);
+            if (!userExists) {
+                throw new Error("Usuario no encontrado");
+            }
+
+            const commentExists = await Comment.findById(comment);
+            if (!commentExists) {
+                throw new Error("Comentario no encontrado");
+            }
+
+            const existingReaction = await Reaction.findOne({ user, comment });
+            if (existingReaction) {
+                throw new Error("Ya has reaccionado a este comentario");
+            }
+
+            const reaction = await Reaction.create({ user, comment, type });
             return reaction;
         } catch (error) {
-            // Asegurarse de que error es de tipo Error
             if (error instanceof Error) {
                 throw new Error("Error creating reaction: " + error.message);
             }
@@ -16,7 +32,6 @@ class ReactionService {
         }
     }
 
-    // Método para obtener todas las reacciones de un comentario
     public async getReactionsByComment(commentId: string): Promise<ReactionDocument[]> {
         try {
             const reactions = await Reaction.find({ comment: commentId }).populate("user", "name email");
@@ -29,7 +44,6 @@ class ReactionService {
         }
     }
 
-    // Método para obtener todas las reacciones de un usuario
     public async getReactionsByUser(userId: string): Promise<ReactionDocument[]> {
         try {
             const reactions = await Reaction.find({ user: userId }).populate("comment", "content");

@@ -64,6 +64,12 @@ mutation {
   }
 }
 
+mutation Login {
+  login(email: "john@example.com", password: "password123") {
+    token
+  }
+}
+
 mutation {
   updateUser(id: "USER_ID", input: { name: "Jane Doe", email: "jane@example.com", password: "newpassword" }) {
     id
@@ -77,14 +83,39 @@ mutation {
 }
 
 mutation {
-  createComment(input: { content: "This is a comment"}) {
-    id
+  createComment(input: {
+    user: "673c1eabf92b3b7a872d0cea",  # ID del usuario
+    content: "Este es un comentario de prueba"
+  }) {
     content
   }
 }
 
 mutation {
+  updateComment(id: "673c21bcf92b3b7a872d0cfb", content: "Este es el nuevo contenido del comentario") {
+    id
+    content
+    user {
+      id
+      name
+      email
+    }
+    parent {
+      id
+      content
+    }
+  }
+}
+
+mutation {
   deleteComment(id: "COMMENT_ID")
+}
+
+mutation CreateReaction($input: CreateReactionInput!) {
+  createReaction(input: $input) {
+    id
+    type
+  }
 }
 
 mutation {
